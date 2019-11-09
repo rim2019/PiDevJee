@@ -64,6 +64,22 @@ namespace WebApp.Controllers
 
         public ActionResult Affichage()
         {
+            
+            using (Context conn = new Context())
+            {
+                var x = OS.GetAll().Where(a => a.DateFin < DateTime.Now);
+
+                var result = x;
+
+                foreach (var item in result)
+                {
+                  
+                        OS.Delete(item);
+                        OS.Commit();
+                    
+                }
+
+            }
             return View(OS.GetAll());
 
         }

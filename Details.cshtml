@@ -1,0 +1,106 @@
+﻿@model Domain.entities.Offre
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutFront.cshtml";
+}
+
+<h2>Details</h2>
+
+@*<div>
+        <h4>Offre</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.NouveauPrix)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NouveauPrix)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PourcentageDeReduction)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PourcentageDeReduction)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.QtDeProduit)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.QtDeProduit)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DateDebut)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DateDebut)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DateFin)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DateFin)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.IdOffresProduit }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@
+<h2>Affichage</h2>
+<div id="page-content">
+
+    <div class="header-page-title clearfix">
+        <div class="title-overlay"></div>
+        <div class="container">
+            <div class="title-breadcrumb clearfix">
+                <h1>Les offres par produit</h1>
+
+
+            </div> <!-- end .title-breadcrumb -->
+        </div> <!-- end .container -->
+    </div> <!-- end .header-page-title -->
+
+    <div class="index-page-search-content">
+
+
+        <div class="container">
+            <h2>Index</h2>
+
+            <p>
+                @Html.ActionLink("Create New", "Create")
+            </p>
+
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <div class="agent-single">
+                        <img src="@Url.Content("img/content/agent-img-1.jpg")" alt="">
+
+                        <ul>
+                            <li><span class="title">@Html.DisplayNameFor(model => model.Produit.Name) Of The Product</span><span class="title-des text-capitalize">@Html.DisplayFor(model => model.Produit.Name)</span></li>
+                            <li><span class="title">@Html.DisplayNameFor(model => model.PourcentageDeReduction)</span><span class="title-des"> @Html.DisplayFor(model => model.PourcentageDeReduction)%</span></li>
+                            <li><span class="title">@Html.DisplayNameFor(model => model.NouveauPrix)</span><span class="title-des"> @Html.DisplayFor(model => model.NouveauPrix)</span></li>
+                            <li><span class="title">Original Price</span><span class="title-des">@Html.DisplayFor(model => model.Produit.Prix)</span></li>
+
+                        </ul>
+
+
+                    </div> <!-- end .agent-single  -->
+                </div> <!-- end grid layout  -->
+            </div>
+
+
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,103 @@
+﻿@model WebApp.Models.PackModels
+
+@{
+    ViewBag.Title = "CreePack";
+    Layout = "~/Views/Shared/_LayoutBack.cshtml";
+}
+
+<h2>Cree Pack</h2>
+
+@using (Html.BeginForm("CreatePack", "Pack", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Cree une pack</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+
+            <div>
+                <div class="col-md-10">
+
+                    @Html.LabelFor(model => model.ListProduits, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <br>
+                    @Html.ListBoxFor(model => model.IdProduitsFk, Model.ListProduits.ToList().Select(
+                        x => new SelectListItem
+                        {
+                            Text = x.Name,
+                            Value = x.IdProduit.ToString()
+                        }
+                         ))
+                </div>
+            </div>
+
+            <br>
+            <div class="col-md-10">
+
+                <div>
+
+                    @Html.LabelFor(model => model.IDPack.PourcentageDeReduction, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                    @Html.EditorFor(model => model.IDPack.PourcentageDeReduction,
+                   new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <br>
+
+            <div>
+                <div class="col-md-10">
+
+                    @Html.LabelFor(model => model.IDPack.QtDeProduit, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                    @Html.EditorFor(model => model.IDPack.QtDeProduit,
+                   new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <br>
+
+            <br>
+            <!-- How to insert a date editor in a Razor view -->
+            <div class="form-group">
+                @Html.LabelFor(model => model.IDPack.DateDebut, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.IDPack.DateDebut, new { @type = "date", @class = "form-control datepicker", @Value = Model.IDPack.DateDebut.ToString("yyyy-MM-dd") })
+                    @Html.ValidationMessageFor(model => model.IDPack.DateDebut, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br>
+
+            <!-- How to insert a date editor in a Razor view -->
+            <div class="form-group">
+                @Html.LabelFor(model => model.IDPack.DateFin, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.IDPack.DateFin, new { @type = "date", @class = "form-control datepicker", @Value = Model.IDPack.DateFin.ToString("yyyy-MM-dd") })
+                    @Html.ValidationMessageFor(model => model.IDPack.DateFin, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br>
+
+            <!-- How to insert a date editor in a Razor view -->
+            <div class="form-group">
+                @Html.LabelFor(model => model.IDPack.image, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBox("file", "", new { type = "file" })
+                    @Html.ValidationMessageFor(model => model.IDPack.image, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    <div class="col-md-10">
+
+        @Html.ActionLink("Back to List", "AffichagePack")
+    </div>
+</div>

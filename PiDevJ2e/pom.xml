@@ -17,10 +17,10 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <name>PiDevJ2e</name>
+    <name>PiDev</name>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>esprit.tn</groupId>
-    <artifactId>PiDevJ2e</artifactId>
+    <groupId>esprittn</groupId>
+    <artifactId>PiDev</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
@@ -33,9 +33,9 @@
         </license>
     </licenses>
     <modules>
-        <module>PiDevJ2e-ejb</module>
-        <module>PiDevJ2e-web</module>
-        <module>PiDevJ2e-ear</module>
+        <module>PiDev-ejb</module>
+        <module>PiDev-web</module>
+        <module>PiDev-ear</module>
     </modules>
 
     <properties>
@@ -72,8 +72,8 @@
             <!-- Define the version of the EJB jar so that we don't need 
                 to repeat ourselves in every module -->
             <dependency>
-                <groupId>esprit.tn</groupId>
-                <artifactId>PiDevJ2e-ejb</artifactId>
+                <groupId>esprittn</groupId>
+                <artifactId>PiDev-ejb</artifactId>
                 <version>${project.version}</version>
                 <type>ejb</type>
             </dependency>
@@ -81,8 +81,8 @@
             <!-- Define the version of the WAR so that we don't need to repeat 
                 ourselves in every module -->
             <dependency>
-                <groupId>esprit.tn</groupId>
-                <artifactId>PiDevJ2e-web</artifactId>
+                <groupId>esprittn</groupId>
+                <artifactId>PiDev-web</artifactId>
                 <version>${project.version}</version>
                 <type>war</type>
                 <scope>compile</scope>

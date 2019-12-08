@@ -1,7 +1,9 @@
 package implementation;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -38,8 +40,26 @@ public class evenementImpl implements IServiceEvenementRemote {
 		lclient.add(client);
 		levenement.add(even);
 		
+		if (even.getDescription().equals("dispo")) {
+			
 		even.setNombrePlace(even.getNombrePlace()-1);
 		even.setNbParticipants(even.getNbParticipants()+1);
+	
+         if(even.getNombrePlace()==0) {
+			  String s="Complet";
+			   even.setDescription(s);
+			
+		}
+       
+         SimpleDateFormat formatter = new SimpleDateFormat("yyy-MM-dd");  
+         Date date = new Date();  
+         System.out.println(formatter.format(date));  
+         System.out.println(even.getDateEvenement().toString());
+         if (even.getDateEvenement().toString().equals(formatter.format(date) ))
+        		 System.out.println("Date Egal");
+         else  System.out.println("Date inegal");
+		}
+
 		//even.set(even.getNombrePlace()-1);
 		even.setClients(lclient);
 		client.setEvenements(levenement);
@@ -88,12 +108,25 @@ public class evenementImpl implements IServiceEvenementRemote {
 	
 
 	@Override
-	public List<Evenement> getAllEvenements(String x) {
+	public List<Evenement> getAllEvenements() {
+		
+		
 		List<Evenement> emp = em.createQuery("Select e from Evenement e", Evenement.class).getResultList();
 	List<Evenement> ev= new ArrayList<Evenement>();
+	 SimpleDateFormat formatter = new SimpleDateFormat("yyy-MM-dd");  
+     Date date = new Date();  
+     System.out.println(formatter.format(date));  
+     
+     
+     for (Evenement evenement : emp) {
+    	 System.out.println(evenement.getDateEvenement().toString());
+         if (evenement.getDateEvenement().toString().equals(formatter.format(date) ))
+        		 System.out.println("Date Egal");
+         else  System.out.println("Date inegal");
+	}
+   
 		
-		
-		for (Evenement eve : emp) {
+	/*	for (Evenement eve : emp) {
 			if(eve.getDescription()==x)
 			{ev.add(eve);
 				return ev;}
@@ -101,7 +134,7 @@ public class evenementImpl implements IServiceEvenementRemote {
 			
 			
 			
-		}
+		}*/
 		 return emp;	}
 	@Override
 	public void updateEvenement(Evenement e) {

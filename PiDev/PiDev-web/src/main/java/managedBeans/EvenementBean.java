@@ -103,8 +103,9 @@ public void recherche() {
 
 	public List<Evenement> getEvenements() {
 		
-		
-	evenements = employeService.getAllEvenements(description);
+	
+	evenements = employeService.getAllEvenements();
+	
 	return evenements;
 	}
 	

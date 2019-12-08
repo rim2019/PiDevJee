@@ -1,0 +1,205 @@
+	Sélectionner tout - Visualiser dans une fenêtre à part
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+ 
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+ 
+    <h:head>
+        <title> Liste des eleves </title>
+        <link rel="stylesheet" href="css/style_all2.css" type="text/css" media="screen" />
+ 
+<style>
+.ui-datatable.myTable th {
+    background: #1E90FF;
+}
+</style>
+        <!-- to choose another color scheme uncomment one of the foloowing stylesheets and wrap styl1.css into a comment -->
+        <link rel="stylesheet" href="css/style1hay.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="css/jquery-ui.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="css/jquery.wysiwyg.css" type="text/css" media="screen" /> 
+ 
+    </h:head>
+    <h:body>
+        <!-- style="width: auto;" -->
+        <h:form>
+ 
+        </h:form>
+        <h:form id="form" style="red">  
+            <p:growl id="growl1" showDetail="true" sticky="true" />
+            <p:panel id="test" style="background: whitesmoke ">
+                <p:dataTable value="#{eleve.valide}" var="o" paginator="true" rows="10" id="test1" styleClass="myTable" scrollable="true" 
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="10" widgetVar="50"   resizableColumns="true"  ><!--style="width: auto;"-->
+                    <f:facet name="header"  >  
+                         Liste des eleves   
+                    </f:facet>
+ 
+                    <p:column filterBy="#{o.header}" width="80px">
+                        <f:facet name="header">  
+                            <h:outputText value="En tete" style="color: #ffffff" />  
+                        </f:facet>
+                        <h:outputText value="#{o.header}"/>
+                    </p:column>
+                    <p:column sortBy="#{o.texte}" width="360px" >
+                        <f:facet name="header">  
+                            <h:outputText value="Message " style="color: #ffffff" />  
+                        </f:facet>
+                        <h:outputText value="#{o.texte}"/>
+                    </p:column>
+ 
+                    <p:column sortBy="#{o.date}" width="300px">
+                        <f:facet name="header">  
+                            <h:outputText value="Date " style="color: #ffffff" />  
+                        </f:facet>
+                        <h:outputText value="#{o.date}"/>
+                    </p:column>
+ 
+                    <p:column sortBy="#{o.status}" width="100px" >
+                        <f:facet name="header">  
+                            <h:outputText value="Status" style="color: #ffffff" />  
+                        </f:facet>
+                        <h:outputText value="#{o.status}"/> 
+                    </p:column>
+ 
+                    <p:column sortBy="#{o.solde}" width="40px">
+                        <f:facet name="header">  
+                            <h:outputText value="Nombre" style="color: #ffffff" />  
+                        </f:facet>
+                        <h:outputText value="#{o.solde}"/>
+                    </p:column>
+ 
+                    <p:growl id="growl" showDetail="true" sticky="true" /> 
+                    <p:column  width="100px" id="test2">
+                        <f:facet name="header">  
+                            <h:outputText value="valider" style="color: #ffffff" />  
+                        </f:facet>
+                        <p:commandButton update=":form:stat" oncomplete="PF('carDialog').show()" icon="ui-icon-search" title="View" styleClass="bouttonView">
+                			<f:setPropertyActionListener value="#{eleve}" target="#{eleve.valide}" />
+           			    </p:commandButton>
+ 
+ 
+                    </p:column>
+ 
+ 
+ 
+                </p:dataTable>
+ 
+                <p:dialog header="Informations sur le lot" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+        <p:outputPanel id="stat" style="text-align:center;">
+             <p:chart type="pie" model="#{eleve.statistiques(o)}" />
+        </p:outputPanel>
+    </p:dialog>
+ 
+            </p:panel>
+ 
+ 
+        </h:form>
+ 
+    </h:body>
+</html>

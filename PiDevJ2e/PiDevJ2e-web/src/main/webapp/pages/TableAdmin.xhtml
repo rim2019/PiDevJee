@@ -1,0 +1,115 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:p="http://primefaces.org/ui"
+template="/templateBack/templateBack.xhtml"
+>
+
+<ui:define name="title">
+
+<title>Service </title>
+</ui:define>
+
+<ui:define name="content">
+
+
+
+
+
+<center>
+<h1>Listes des Quizz</h1>
+
+	<h:form id="tab">
+	
+    <p:dataTable id="tableStateDT" var="qui" value="#{quiz.DoGetAllQuiz()}" widgetVar="carsTable" multiViewState="true"
+                 rows="10" paginator="true"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 rowsPerPageTemplate="5,10,15"
+                 selectionMode="single" selection="#{quiz.selectedCar}" rowKey="#{qui.idQ}"
+                 emptyMessage="No Quiz found with given criteria" filteredValue="#{quiz.filteredCars}">
+ 
+       
+       
+        <f:facet name="header">
+            <p:outputPanel>
+                <h:outputText value="Search all fields:" />
+                <p:inputText id="globalFilter" onkeyup="PF('carsTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+            </p:outputPanel>
+        </f:facet>
+ 
+        <p:ajax event="rowSelect" update=":tab:carDetail" oncomplete="PF('carDialog').show()" />
+ 
+        
+ 
+        <p:column headerText="Question" filterBy="#{qui.question}" sortBy="#{qui.question}" filterMatchMode="startsWith">
+            <h:outputText value="#{qui.question}" />
+        </p:column>
+        <p:column headerText="Choix 1" filterBy="#{qui.choix1}" sortBy="#{qui.choix1}" filterMatchMode="startsWith">
+            <h:outputText value="#{qui.choix1}" />
+        </p:column>
+        <p:column headerText="Choix 2" filterBy="#{qui.choix2}" sortBy="#{qui.choix2}" filterMatchMode="startsWith">
+            <h:outputText value="#{qui.choix2}" />
+        </p:column>
+        <p:column headerText="Choix 3" filterBy="#{qui.choix3}" sortBy="#{qui.choix3}" filterMatchMode="startsWith">
+            <h:outputText value="#{qui.choix3}" />
+        </p:column>
+        <p:column headerText="Reponse" filterBy="#{qui.reponse}" sortBy="#{qui.reponse}" filterMatchMode="startsWith">
+            <h:outputText value="#{qui.reponse}" />
+        </p:column>
+        
+        <p:column headerText="Supprimer" >
+           <h:commandButton  action="#{quiz.deleteQuizById(qui.idQ)}" value="delete">
+           </h:commandButton>
+        </p:column>
+ 
+        
+    </p:dataTable>
+ 
+ 
+ 
+    <p:dialog header="Car Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+        
+        <p:outputPanel id="carDetail" style="text-align:center;">
+           
+            <p:panelGrid  columns="2" rendered="#{not empty quiz.selectedCar}"  columnClasses="value,value">
+              <h:outputLabel >Question :</h:outputLabel>
+			<h:inputText value="#{quiz.selectedCar.question}"></h:inputText>
+		
+			<h:outputLabel >Choix 1  :</h:outputLabel>
+			<h:inputText value="#{quiz.selectedCar.choix1}" ></h:inputText>
+			
+			<h:outputLabel >Choix 2  :</h:outputLabel>
+			<h:inputText value="#{quiz.selectedCar.choix2}"></h:inputText>
+			
+
+			<h:outputLabel >Choix 3  :</h:outputLabel>
+			<h:inputText value="#{quiz.selectedCar.choix3}"></h:inputText>
+			
+			
+
+			<h:outputLabel >Reponse  :</h:outputLabel>
+			<h:inputText value="#{quiz.selectedCar.reponse}"></h:inputText>
+			
+			
+			
+            </p:panelGrid>
+           
+        </p:outputPanel>
+        
+    </p:dialog>
+   
+   	 <h:commandLink>
+          <p:outputLabel value="exporter"  width="24"/>
+          <p:dataExporter type="csv" target="tableStateDT" fileName="cars" />
+      </h:commandLink>
+      
+</h:form>
+	
+	</center>
+
+
+</ui:define>
+
+
+</ui:composition>

@@ -32,7 +32,8 @@ public class evenementImpl implements IServiceEvenementRemote {
 
 	
 	
-	public void affecterClientAEvenement(int clientId, int evenId) {
+	public void affecterClientAEvenement(int clientId, int evenId) 
+	{
 		Client client = em.find(Client.class, clientId);
 		Evenement even = em.find(Evenement.class, evenId);
 		List <Client> lclient=even.getClients();
@@ -41,31 +42,29 @@ public class evenementImpl implements IServiceEvenementRemote {
 		lclient.add(client);
 		levenement.add(even);
 		
-		if (even.getDescription().equals("Disponible")) {
+		if (even.getDescription().equals("Disponible"))
+		{
 			
-		even.setNombrePlace(even.getNombrePlace()-1);
-		even.setNbParticipants(even.getNbParticipants()+1);
+		    even.setNombrePlace(even.getNombrePlace()-1);
+		    even.setNbParticipants(even.getNbParticipants()+1);
 	
-         if(even.getNombrePlace()==0) {
-			  String s="Complet";
-			   even.setDescription(s);
+                  if(even.getNombrePlace()==0) 
+                  {
+			         String s="Complet";
+			          even.setDescription(s);
 			
-		}
+                   }
        
-         SimpleDateFormat formatter = new SimpleDateFormat("yyy-MM-dd");  
-         Date date = new Date();  
-         System.out.println(formatter.format(date));  
-         System.out.println(even.getDateEvenement().toString());
-         if (even.getDateEvenement().toString().equals(formatter.format(date) ))
-        		 System.out.println("Date Egal");
-         else  System.out.println("Date inegal");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyy-MM-dd");  
+            Date date = new Date();  
+            System.out.println(formatter.format(date));  
+            System.out.println(even.getDateEvenement().toString());
+            
 		}
 
-		//even.set(even.getNombrePlace()-1);
+	
 		even.setClients(lclient);
 		client.setEvenements(levenement);
-		
-		
 		
 		if(even.getClients().isEmpty())
 		{
@@ -77,92 +76,79 @@ public class evenementImpl implements IServiceEvenementRemote {
 		}
 
 	}
+	
+	
 	@Override
-	public int ajouterEvenement(Evenement employe) {
+	public int ajouterEvenement(Evenement employe)
+	{
 		em.persist(employe);
 		return employe.getIdEvenement();
 	}
 	
-	public int ajouterEvenementPasse(EvenementPass employe) {
+	public int ajouterEvenementPasse(EvenementPass employe)
+	{
 		em.persist(employe);
 		return employe.getIdEvenementPasse();
 	}
+	
+	
 	public int ajouterEmploye(Evenement employe) {
 		em.persist(employe);
 		return employe.getIdEvenement();
 	}
 	
-	public List<Evenement> recherche(String x) {
-		
-		List<Evenement> emp = em.createQuery("Select e from Evenement e", Evenement.class).getResultList();
-		List<Evenement> ev= new ArrayList<Evenement>();
-		
-		
-		for (Evenement eve : emp) {
-			if(eve.getDescription()==x)
-			{ev.add(eve);
-				return ev;}
-		
-			
-			
-			
-		}
-		 return emp;
-		
-	}
+
 	
 	
 
 	@Override
-	public List<Evenement> getAllEvenements() {
+	public List<Evenement> getAllEvenements()
+	{
 		
 		
 		List<Evenement> emp = em.createQuery("Select e from Evenement e", Evenement.class).getResultList();
-	List<Evenement> ev= new ArrayList<Evenement>();
-	 SimpleDateFormat formatter = new SimpleDateFormat("yyy-MM-dd");  
-     Date date = new Date();  
-     System.out.println(formatter.format(date));  
+	    List<Evenement> ev= new ArrayList<Evenement>();
+	    SimpleDateFormat formatter = new SimpleDateFormat("yyy-MM-dd");  
+        Date date = new Date();  
+           System.out.println(formatter.format(date));  
      
      
-     for (Evenement evenement : emp) {
-    	 System.out.println(evenement.getDateEvenement().toString());
-         if (evenement.getDateEvenement().toString().equals(formatter.format(date) ))
-         {	 System.out.println("Date Egal");
-         ajouterEvenementPasse(new EvenementPass(evenement.getDateEvenement(),evenement.getDescription(),evenement.getImage(), evenement.getLocalisation(),
- 				evenement.getNbInteresses(),evenement.getNbParticipants(),evenement.getNombrePlace()));
+        for (Evenement evenement : emp)
+        {
+    	
+            if (evenement.getDateEvenement().toString().equals(formatter.format(date) ))
+               {	 System.out.println("Date Egal");
+                      ajouterEvenementPasse(new EvenementPass(evenement.getDateEvenement(),evenement.getDescription(),evenement.getImage(), evenement.getLocalisation(),
+ 			        	evenement.getNbInteresses(),evenement.getNbParticipants(),evenement.getNombrePlace()));
          
  
-         }
- 
-         else  System.out.println("Date inegal");
-        if(-date.getDate()+evenement.getDateEvenement().getDate()==1 && (evenement.getNbParticipants()<evenement.getNombrePlace()))
-        {
-        	evenement.setDescription("annule");
+               }
+    
+
+           if(-date.getDate()+evenement.getDateEvenement().getDate()==1 && (evenement.getNbParticipants()<evenement.getNombrePlace()))
+                {
+        	        evenement.setDescription("annule");
         	
-        	
-        }
+        	    }
+           
+	    }
+
+		 return emp;
 	}
-   
-		
-	/*	for (Evenement eve : emp) {
-			if(eve.getDescription()==x)
-			{ev.add(eve);
-				return ev;}
-		
-			
-			
-			
-		}*/
-		 return emp;	}
+	
+	
+	
 	@Override
-	public void updateEvenement(Evenement e) {
+	public void updateEvenement(Evenement e)
+	{
 		Evenement emp = em.find(Evenement.class, e.getIdEvenement()); 
+		emp.setImage(e.getImage());
 		emp.setDescription(e.getDescription()); 
 		emp.setLocalisation(e.getLocalisation()); 
 		emp.setNbInteresses(e.getNbInteresses()); 
 		emp.setNbParticipants(e.getNbParticipants()); 
 	
-		
+		emp.setNombrePlace(e.getNombrePlace()); 
 	}
 
 
@@ -173,7 +159,8 @@ public class evenementImpl implements IServiceEvenementRemote {
 		
 	}
 	@Override
-	public void deleteEvenementById(int evenementId) {
+	public void deleteEvenementById(int evenementId)
+	{
 		Evenement evenement = em.find(Evenement.class, evenementId);
 		
 		//Desaffecter l'employe de tous les departements

@@ -51,36 +51,49 @@ public class EvenementBean{
 	private int nbParticipants;
 	private int clientId;
 	private Integer employeIdToBeUpdated;
-	private Part img;
+
 	private int nombrePlace;
 	@EJB
 	evenementImpl employeService;
 	@EJB
 	ClientImpl clientService;
 	
-public Part getImg() {
-		return img;
-	}
 
-	public void setImg(Part img) {
-		this.img = img;
-	}
+
 
 
 	
-	public void addEvenement() throws IOException {
-		
-		 SimpleDateFormat formatter = new SimpleDateFormat("yyy-MM-dd");  
-	     Date date = new Date();  
-	if(	-date.getDate()+this.getDateEvenement().getDate()>=2  && this.getNombrePlace()>4)
+	public void addEvenement() throws IOException 
 	{
-		this.setNbInteresses(0);
-		this.setNbParticipants(0);
-		this.setDescription("Disponible");
-		this.description="Disponible";
-		employeService.ajouterEmploye(new Evenement(dateEvenement,description,image, localisation,
-				nbInteresses,nbParticipants,nombrePlace));
-		}}
+		
+		      SimpleDateFormat formatter = new SimpleDateFormat("yyy-MM-dd");  
+	           Date date = new Date();  
+	         if(	-date.getDate()+this.getDateEvenement().getDate()>=2  && this.getNombrePlace()>4)
+	             {
+	            	this.setNbInteresses(0);
+	             	this.setNbParticipants(0);
+	              	this.setDescription("Disponible");
+	             	this.description="Disponible";
+	             	
+		         employeService.ajouterEmploye(new Evenement(dateEvenement,description,image, localisation,
+				                                             nbInteresses,nbParticipants,nombrePlace));
+		         }
+   }
+	
+	
+	public void updateEvenement() throws IOException
+	{
+		
+	      SimpleDateFormat formatter = new SimpleDateFormat("yyy-MM-dd");  
+          Date date = new Date();  
+              if(	-date.getDate()+this.getDateEvenement().getDate()>=2  && this.getNombrePlace()>4)
+                 {
+		
+		            employeService.updateEvenement(new Evenement(employeIdToBeUpdated,dateEvenement,description,image, localisation,
+			                                                     nbInteresses,nbParticipants,nombrePlace ));
+		           } 
+    }
+	
 public void recherche() {
 	
 	
@@ -97,27 +110,30 @@ public void recherche() {
 	
 	private List<Evenement> evenements;
 
-	public List<Evenement> getEvenements() {
+	public List<Evenement> getEvenements()
+	{
 		
 	
-	evenements = employeService.getAllEvenements();
-	
-	return evenements;
+	       evenements = employeService.getAllEvenements();
+	 
+	        return evenements;
 	}
 	
 	
-	public void affecter(int evenementId) {
+	public void affecter(int evenementId)
+	{
 		
-	int Clientid=1;
-	//int evenementId;
-	employeService.affecterClientAEvenement(Clientid,evenementId);
+	       int Clientid=1;
+	       employeService.affecterClientAEvenement(Clientid,evenementId);
 	}
 	
 	
 	public void removeEvenement(int evenementId)
 	{
-	employeService.deleteEvenementById(evenementId);
+	     employeService.deleteEvenementById(evenementId);
 	}
+	
+	
     public EvenementBean() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -133,7 +149,7 @@ public void recherche() {
 
 
 	public EvenementBean(Date dateEvenement, String description,typeEven image, LocalisationEven localisation, int nbInteresses,
-			int nbParticipants, Integer employeIdToBeUpdated, Part img, int nombrePlace, evenementImpl employeService,
+			int nbParticipants, Integer employeIdToBeUpdated, int nombrePlace, evenementImpl employeService,
 			List<Evenement> evenements)
 	{
 		super();
@@ -144,7 +160,7 @@ public void recherche() {
 		this.nbInteresses = nbInteresses;
 		this.nbParticipants = nbParticipants;
 		this.employeIdToBeUpdated = employeIdToBeUpdated;
-		this.img = img;
+	
 		this.nombrePlace = nombrePlace;
 		this.employeService = employeService;
 		this.evenements = evenements;
@@ -183,12 +199,7 @@ public void recherche() {
 	
 	
 	
-	public void updateEvenement() throws IOException
-	
-	{ 
-		
-		employeService.updateEvenement(new Evenement(employeIdToBeUpdated,dateEvenement,description,image, localisation,
-			nbInteresses,nbParticipants,nombrePlace )); }
+
 	public Date getDateEvenement() {
 		return dateEvenement;
 	}

@@ -455,16 +455,11 @@ opacity:0;
 					<tr>
 					<h:commandButton action="#{evenementBean.addEvenement()}" value="Ajouter Evenement" />
 				</tr>
-	<tr>
+               	<tr>
 						<h:commandButton value="Modifier Evenement"
 							action="#{evenementBean.updateEvenement()}" />
 					</tr>
-<tr>
-						<h:commandButton value="Participer Evenement"
-							action="#{evenementBean.participerEvenement()}" />
-							
-						
-					</tr>
+
 
 				</table>
 			</h:form>
@@ -549,8 +544,6 @@ opacity:0;
 							value="Supprimer" />
 							<h:commandButton action="#{evenementBean.displayEvenement(evenement)}"
 							value="Afficher" />
-								<h:commandButton action="#{evenementBean.modifierEvenement(evenement)}"
-							value="modifier" />
 							
 								<h:commandButton action="#{evenementBean.affecter(evenement.idEvenement)}"
 							value="participer" />

@@ -24,9 +24,9 @@ public class EvenementPass implements Serializable {
 
 	private String description;
 
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.ORDINAL)
 	private typeEven image;
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.ORDINAL)
 	private LocalisationEven localisation;
 
 	private int nbInteresses;

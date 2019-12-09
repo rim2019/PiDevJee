@@ -9,12 +9,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import RemoteService.ICommentPackService;
-import RemoteService.ICommentService;
-import RemoteService.IOffreService;
 import model.Client;
 import model.Comment;
 import model.CommentPack;
-import model.Offre;
 import model.Pack;
 
 
@@ -41,11 +38,20 @@ public class CommentPackService implements ICommentPackService {
 	@Override
 	public void deleteCommentPackById(int idComment) {
 		CommentPack commentPack = em.find(CommentPack.class, idComment);
+		System.out.println("aaaaaaazzezezezeaaaaaaa");
 		em.remove(commentPack);
 		
 	}
 
 	
+
+	public EntityManager getEm() {
+		return em;
+	}
+
+	public void setEm(EntityManager em) {
+		this.em = em;
+	}
 
 	@Override
 	public List<CommentPack> findCommentsByPacks(int idPack) {

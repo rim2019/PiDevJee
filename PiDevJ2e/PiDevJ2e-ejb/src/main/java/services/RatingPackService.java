@@ -12,26 +12,29 @@ import javax.persistence.PersistenceContext;
 
 
 import RemoteService.IRatingOffreService;
+import RemoteService.IRatingPackService;
 import model.Client;
 
 import model.Offre;
+import model.Pack;
 import model.Rating;
+import model.RatingPack;
 
 
 @Stateless
 @LocalBean
 
-public class RatingPackService implements IRatingOffreService {
+public class RatingPackService implements IRatingPackService {
 	@PersistenceContext
 	EntityManager em;
 	
 	@Override
-	public void addRating(Rating rating,int idOffre, int idClient) {
-		Rating r = new Rating();
+	public void addRatingPack(RatingPack rating,int idPack, int idClient) {
+		RatingPack r = new RatingPack();
 		
-		Offre offre = em.find(Offre.class, idOffre);
+		Pack pack = em.find(Pack.class, idPack);
 		Client client = em.find(Client.class, idClient);
-		r.setOffre(offre);
+		r.setPack(pack);
 		r.setClient(client);
 		r.setNbr(rating.getNbr());
 		em.persist(r);
@@ -39,13 +42,13 @@ public class RatingPackService implements IRatingOffreService {
 	}
 	
 	@Override
-	public int VerifRatingParId(int idOffre, int idClient) {
-		Offre offre = em.find(Offre.class, idOffre);
+	public int VerifRatingParId(int idPack, int idClient) {
+		Pack offre = em.find(Pack.class, idPack);
 		Client client = em.find(Client.class, idClient);
-		List<Rating>emp = em.createQuery("select r from Rating r", Rating.class).getResultList();
+		List<RatingPack>emp = em.createQuery("SELECT r FROM RatingPack r", RatingPack.class).getResultList();
 	
-		for (Rating rating : emp) {
-			if (rating.getOffre().getIdOffresProduit()==idOffre && rating.getClient().getClientId() == idClient)
+		for (RatingPack rating : emp) {
+			if (rating.getPack().getIdPackProduit()==idPack && rating.getClient().getClientId() == idClient)
 				return rating.getNbr();
 		}
 		

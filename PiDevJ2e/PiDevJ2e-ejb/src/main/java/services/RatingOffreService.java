@@ -53,6 +53,23 @@ public class RatingOffreService implements IRatingOffreService {
 		
 	}
 	
+	@Override
+	public float MoyenneRatingParId(int idOffre) {
+		Offre offre = em.find(Offre.class, idOffre);
+		List<Rating>emp = em.createQuery("select r from Rating r where r.offre.idOffresProduit="+idOffre, Rating.class)
+				.getResultList();
+	
+		int x = 0;
+		int nbr = 0;
+		for (Rating rating : emp) {
+			nbr++;
+			x = x + rating.getNbr();
+		}
+		
+		return x/nbr;
+		
+	}
+	
 		
 
 }

@@ -72,7 +72,8 @@ public class QuizService implements IQuizService {
 		  
 		  for (int i = 0 ; i <3 ; i++)
 		  {
-			  int randomInt = ThreadLocalRandom.current().nextInt(8, 14);System.out.println(randomInt);
+			  int randomInt = ThreadLocalRandom.current().nextInt(12,21);
+			  System.out.println(randomInt);
 				TypedQuery<Quiz> jpql = em.createQuery("select q from Quiz q WHERE id = :id", Quiz.class).setParameter("id", randomInt);
 				  LQ.add(jpql.getSingleResult());
 		  }

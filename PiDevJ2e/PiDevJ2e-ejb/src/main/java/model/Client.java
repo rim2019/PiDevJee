@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
@@ -23,28 +24,40 @@ public class Client implements Serializable {
 	private String adresseClient;
 
 	@Column(name="AgeClient")
-	private int ageClient;
+	private String ageClient;
 
 	@Column(name="EmailClient")
 	private String emailClient;
+
+	//private int idQ;
 
 	@Column(name="NomClient")
 	private String nomClient;
 
 	@Column(name="NumeroClient")
-	private int numeroClient;
-
-	@Column(name="PasswordClient")
-	private String passwordClient;
-
-	@Column(name="PointsClient")
-	private int pointsClient;
+	private String numeroClient;
 
 	@Column(name="RoleClient")
 	private String roleClient;
 
 	@Column(name="TypeClient")
 	private String typeClient;
+
+	//bi-directional many-to-one association to Comment
+	@OneToMany(mappedBy="client")
+	private List<Comment> comments;
+
+	//bi-directional many-to-one association to CommentPack
+	@OneToMany(mappedBy="client")
+	private List<CommentPack> commentPacks;
+
+	//bi-directional many-to-one association to Rating
+	@OneToMany(mappedBy="client")
+	private List<Rating> ratings;
+
+	//bi-directional many-to-one association to RatingPack
+	@OneToMany(mappedBy="client")
+	private List<RatingPack> ratingPacks;
 
 	public Client() {
 	}
@@ -65,11 +78,11 @@ public class Client implements Serializable {
 		this.adresseClient = adresseClient;
 	}
 
-	public int getAgeClient() {
+	public String getAgeClient() {
 		return this.ageClient;
 	}
 
-	public void setAgeClient(int ageClient) {
+	public void setAgeClient(String ageClient) {
 		this.ageClient = ageClient;
 	}
 
@@ -81,7 +94,15 @@ public class Client implements Serializable {
 		this.emailClient = emailClient;
 	}
 
-	public String getNomClient() {  
+	/*public int getIdQ() {
+		return this.idQ;
+	}
+
+	public void setIdQ(int idQ) {
+		this.idQ = idQ;
+	}*/
+
+	public String getNomClient() {
 		return this.nomClient;
 	}
 
@@ -89,28 +110,12 @@ public class Client implements Serializable {
 		this.nomClient = nomClient;
 	}
 
-	public int getNumeroClient() {
+	public String getNumeroClient() {
 		return this.numeroClient;
 	}
 
-	public void setNumeroClient(int numeroClient) {
+	public void setNumeroClient(String numeroClient) {
 		this.numeroClient = numeroClient;
-	}
-
-	public String getPasswordClient() {
-		return this.passwordClient;
-	}
-
-	public void setPasswordClient(String passwordClient) {
-		this.passwordClient = passwordClient;
-	}
-
-	public int getPointsClient() {
-		return this.pointsClient;
-	}
-
-	public void setPointsClient(int pointsClient) {
-		this.pointsClient = pointsClient;
 	}
 
 	public String getRoleClient() {
@@ -121,7 +126,7 @@ public class Client implements Serializable {
 		this.roleClient = roleClient;
 	}
 
-	public Object getTypeClient() {
+	public String getTypeClient() {
 		return this.typeClient;
 	}
 
@@ -129,18 +134,92 @@ public class Client implements Serializable {
 		this.typeClient = typeClient;
 	}
 
-	public Client(String adresseClient, int ageClient, String emailClient, String nomClient, int numeroClient,
-			String passwordClient, int pointsClient, String roleClient, String typeClient) {
-		
-		this.adresseClient = adresseClient;
-		this.ageClient = ageClient;
-		this.emailClient = emailClient;
-		this.nomClient = nomClient;
-		this.numeroClient = numeroClient;
-		this.passwordClient = passwordClient;
-		this.pointsClient = pointsClient;
-		this.roleClient = roleClient;
-		this.typeClient = typeClient;
+	public List<Comment> getComments() {
+		return this.comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
+	public Comment addComment(Comment comment) {
+		getComments().add(comment);
+		comment.setClient(this);
+
+		return comment;
+	}
+
+	public Comment removeComment(Comment comment) {
+		getComments().remove(comment);
+		comment.setClient(null);
+
+		return comment;
+	}
+
+	public List<CommentPack> getCommentPacks() {
+		return this.commentPacks;
+	}
+
+	public void setCommentPacks(List<CommentPack> commentPacks) {
+		this.commentPacks = commentPacks;
+	}
+
+	public CommentPack addCommentPack(CommentPack commentPack) {
+		getCommentPacks().add(commentPack);
+		commentPack.setClient(this);
+
+		return commentPack;
+	}
+
+	public CommentPack removeCommentPack(CommentPack commentPack) {
+		getCommentPacks().remove(commentPack);
+		commentPack.setClient(null);
+
+		return commentPack;
+	}
+
+	public List<Rating> getRatings() {
+		return this.ratings;
+	}
+
+	public void setRatings(List<Rating> ratings) {
+		this.ratings = ratings;
+	}
+
+	public Rating addRating(Rating rating) {
+		getRatings().add(rating);
+		rating.setClient(this);
+
+		return rating;
+	}
+
+	public Rating removeRating(Rating rating) {
+		getRatings().remove(rating);
+		rating.setClient(null);
+
+		return rating;
+	}
+
+	public List<RatingPack> getRatingPacks() {
+		return this.ratingPacks;
+	}
+
+	public void setRatingPacks(List<RatingPack> ratingPacks) {
+		this.ratingPacks = ratingPacks;
+	}
+
+	public RatingPack addRatingPack(RatingPack ratingPack) {
+		getRatingPacks().add(ratingPack);
+		ratingPack.setClient(this);
+
+		return ratingPack;
+	}
+
+	public RatingPack removeRatingPack(RatingPack ratingPack) {
+		getRatingPacks().remove(ratingPack);
+		ratingPack.setClient(null);
+
+		return ratingPack;
 	}
 
 }

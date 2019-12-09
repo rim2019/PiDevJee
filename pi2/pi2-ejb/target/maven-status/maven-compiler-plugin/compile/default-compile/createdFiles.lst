@@ -1,0 +1,4 @@
+model\Client.class
+model\Reclamation.class
+services\interfaces\ReclamationServiceRemote.class
+service\implementation\ReclamationService.class

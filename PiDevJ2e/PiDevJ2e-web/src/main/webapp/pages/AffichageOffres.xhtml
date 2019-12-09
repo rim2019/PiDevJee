@@ -1,0 +1,92 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+xmlns:ui="http://java.sun.com/jsf/facelets" 
+xmlns:p="http://primefaces.org/ui"
+template="/template/template.xhtml">
+
+<ui:define name="content">
+
+
+<div id="page-content">
+
+<div class="header-page-title clearfix">
+        <div class="title-overlay"></div>
+        <div class="container">
+            <div class="title-breadcrumb clearfix">
+                <h1>ALL Offers</h1>
+
+
+            </div> <!-- end .title-breadcrumb -->
+        </div> <!-- end .container -->
+    </div> <!-- end .header-page-title -->
+
+
+
+
+
+
+
+
+
+ <div class="row">
+ 
+      
+ 
+       
+<ui:repeat var="item" value="#{offre.listeOffre}">
+       
+        <div class="col-md-4 col-sm-6">
+            <figure class="circle">
+                <p class="ktiba">
+                   
+                   
+                </p>
+            </figure>
+
+            <div class="agent-single">
+
+
+
+                <img src="./img/#{item.image}"  alt="" height="1" width="60" />
+
+                <ul>
+                    <li><span class="title">Name Product:</span><span class="title-des text-capitalize"><p>#{item.produit.name}</p>  </span></li>
+                    <li><span class="title">New Price:</span><span class="title-des"><p>#{item.nouveauPrix}</p>  </span></li>
+                    <li><span class="title">Old Price:</span><span class="title-des"><p>#{item.produit.prix}</p>  </span></li>
+
+                </ul>
+
+                <div class="view-profile">
+                <h:form>
+                   <h:commandButton  action="#{offre.DoGetOffreDetails(item.idOffresProduit)}" value="details">
+            
+ 
+ </h:commandButton>
+ <h:panelGroup rendered="#{quiz.succed == 0}">
+ 
+  <h:commandButton value="Quizz" action="#{quiz.redirectToQuiz()}" > </h:commandButton>
+ </h:panelGroup>
+ </h:form>
+                </div>
+
+
+            </div> <!-- end grid layout  -->
+
+        </div>
+   </ui:repeat>     
+
+    </div>
+
+</div>
+
+
+
+
+</ui:define>
+
+
+
+
+
+</ui:composition>

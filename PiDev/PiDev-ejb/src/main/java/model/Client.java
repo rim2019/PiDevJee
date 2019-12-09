@@ -54,7 +54,7 @@ public class Client implements Serializable {
 	//bi-directional many-to-many association to Evenement
 	@ManyToMany
 	@JoinTable(
-		name="evenementClients"
+		name="EvenementClient"
 		, joinColumns={
 			@JoinColumn(name="clients")
 			}

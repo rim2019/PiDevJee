@@ -428,28 +428,25 @@ opacity:0;
 			
 				
 			
-					<tr>
-						<td><h:outputText value="Description"></h:outputText></td>
-						<td><h:inputText value="#{evenementBean.description}"></h:inputText></td>
-					</tr>
 				
 					
 				 
-					<tr>
-						<td><h:outputText value="Localisation"></h:outputText></td>
-						<td><h:inputText value="#{evenementBean.localisation}"></h:inputText></td>
-					</tr>
-					<tr>
-						<td><h:outputText value="Nombres d'interessés"></h:outputText></td>
-						<td><h:inputText value="#{evenementBean.nbInteresses}"></h:inputText></td>
-					</tr>
-					<tr>
-						<td><h:outputText value="Nombres de participants"></h:outputText></td>
-						<td><h:inputText value="#{evenementBean.nbParticipants}"></h:inputText></td>
+				
+						<tr>
+
+						<td><h:outputText value="Type Evenement"></h:outputText></td>
+						<h:selectOneMenu value="#{evenementBean.image}">
+							<f:selectItem itemLabel="Choisir type Evenement" itemValue="" />
+							<f:selectItems value="#{data.roles}" />
+						</h:selectOneMenu>
 					</tr>
 						<tr>
-						<td><h:outputText value="Nombres de participants"></h:outputText></td>
-						<td><h:inputText value="#{evenementBean.image}"></h:inputText></td>
+
+						<td><h:outputText value="Localisation"></h:outputText></td>
+						<h:selectOneMenu value="#{evenementBean.localisation}">
+							<f:selectItem itemLabel="Choisir la Localisation" itemValue="" />
+							<f:selectItems value="#{data.localisation}" />
+						</h:selectOneMenu>
 					</tr>
 					<tr>
 						<td><h:outputText value="Nombres de places"></h:outputText></td>

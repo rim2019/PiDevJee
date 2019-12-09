@@ -31,10 +31,10 @@ public class Evenement implements Serializable {
 	private Date dateEvenement;
 
 	private String description;
-
-	private String image;
-
-	private String localisation;
+	@Enumerated(EnumType.STRING)
+	private typeEven image;
+	@Enumerated(EnumType.STRING)
+	private LocalisationEven localisation;
 
 	private int nbInteresses;
 
@@ -44,20 +44,20 @@ public class Evenement implements Serializable {
 
 	public Evenement() {
 	}
-	public Evenement(int idEvenement, Date date,String description,String image, String localisation,
+	public Evenement(int idEvenement, Date date,String description,typeEven image, LocalisationEven localisation,
 			int nbInteresses, int nbParticipants,int nombrePlace) {
 		super();
 		this.idEvenement = idEvenement;
 	
 		this.description = description;
-		//this.image = image;
+		this.image = image;
 		this.localisation = localisation;
 		this.nbInteresses = nbInteresses;
 		this.nbParticipants = nbParticipants;
 		this.nombrePlace=nombrePlace;
 	
 	}
-	public Evenement( Date dateEvenement,String description, String image, String localisation,
+	public Evenement( Date dateEvenement,String description, typeEven image, LocalisationEven localisation,
 			int nbInteresses, int nbParticipants,int nombrePlace) {
 		super();
 	
@@ -70,7 +70,7 @@ public class Evenement implements Serializable {
 		this.nombrePlace=nombrePlace;
 	
 	}
-	public Evenement( String description, String image, String localisation,
+	public Evenement( String description, typeEven image, LocalisationEven localisation,
 			int nbInteresses, int nbParticipants) {
 		super();
 	
@@ -83,7 +83,7 @@ public class Evenement implements Serializable {
 	}
 	
 	
-	public Evenement(Date dateEvenement,String description, String localisation, int nbInteresses, int nbParticipants) {
+	public Evenement(Date dateEvenement,String description, LocalisationEven localisation, int nbInteresses, int nbParticipants) {
 		super();
 		this.dateEvenement=dateEvenement;
 		this.description = description;
@@ -109,18 +109,7 @@ public class Evenement implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getImage() {
-		return image;
-	}
-	public void setImage(String image) {
-		this.image = image;
-	}
-	public String getLocalisation() {
-		return localisation;
-	}
-	public void setLocalisation(String localisation) {
-		this.localisation = localisation;
-	}
+
 	public int getNbInteresses() {
 		return nbInteresses;
 	}
@@ -144,6 +133,21 @@ public class Evenement implements Serializable {
 	}
 	public void setClients(List<Client> clients) {
 		this.clients = clients;
+	}
+	public typeEven getImage() {
+		return image;
+	}
+	public void setImage(typeEven image) {
+		this.image = image;
+	}
+	public LocalisationEven getLocalisation() {
+		return localisation;
+	}
+	public void setLocalisation(LocalisationEven localisation) {
+		this.localisation = localisation;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	
 

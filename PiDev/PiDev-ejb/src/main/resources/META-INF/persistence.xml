@@ -26,6 +26,7 @@
 		<jta-data-source>java:/sqlserver/ds</jta-data-source>
 		<class>model.Client</class>
 		<class>model.Evenement</class>
+		<class>model.EvenementPass</class>
      
 		
 		<properties>

@@ -15,6 +15,7 @@ import javax.persistence.PersistenceContext;
 import Services.IServiceEvenementRemote;
 import model.Client;
 import model.Evenement;
+import model.EvenementPass;
 
 
 
@@ -40,7 +41,7 @@ public class evenementImpl implements IServiceEvenementRemote {
 		lclient.add(client);
 		levenement.add(even);
 		
-		if (even.getDescription().equals("dispo")) {
+		if (even.getDescription().equals("Disponible")) {
 			
 		even.setNombrePlace(even.getNombrePlace()-1);
 		even.setNbParticipants(even.getNbParticipants()+1);
@@ -80,6 +81,11 @@ public class evenementImpl implements IServiceEvenementRemote {
 	public int ajouterEvenement(Evenement employe) {
 		em.persist(employe);
 		return employe.getIdEvenement();
+	}
+	
+	public int ajouterEvenementPasse(EvenementPass employe) {
+		em.persist(employe);
+		return employe.getIdEvenementPasse();
 	}
 	public int ajouterEmploye(Evenement employe) {
 		em.persist(employe);
@@ -121,8 +127,20 @@ public class evenementImpl implements IServiceEvenementRemote {
      for (Evenement evenement : emp) {
     	 System.out.println(evenement.getDateEvenement().toString());
          if (evenement.getDateEvenement().toString().equals(formatter.format(date) ))
-        		 System.out.println("Date Egal");
+         {	 System.out.println("Date Egal");
+         ajouterEvenementPasse(new EvenementPass(evenement.getDateEvenement(),evenement.getDescription(),evenement.getImage(), evenement.getLocalisation(),
+ 				evenement.getNbInteresses(),evenement.getNbParticipants(),evenement.getNombrePlace()));
+         
+ 
+         }
+ 
          else  System.out.println("Date inegal");
+        if(-date.getDate()+evenement.getDateEvenement().getDate()==1 && (evenement.getNbParticipants()<evenement.getNombrePlace()))
+        {
+        	evenement.setDescription("annule");
+        	
+        	
+        }
 	}
    
 		

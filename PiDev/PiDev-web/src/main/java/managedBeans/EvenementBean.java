@@ -24,6 +24,8 @@ import javax.servlet.http.Part;
 import implementation.ClientImpl;
 import implementation.evenementImpl;
 import model.Evenement;
+import model.LocalisationEven;
+import model.typeEven;
 
 
 @ManagedBean(name ="evenementBean")
@@ -40,9 +42,9 @@ public class EvenementBean{
 
 	private String description;
 
-	private String image;
+	private typeEven image;
 
-	private String localisation;
+	private LocalisationEven localisation;
 
 	private int nbInteresses;
 
@@ -64,27 +66,21 @@ public Part getImg() {
 		this.img = img;
 	}
 
-public void upload() throws IOException {
-	
-	InputStream in =img.getInputStream();
-	File f = new File("C:\\Users\\Sarra\\Desktop\\upload"+img.getSubmittedFileName());
-	f.createNewFile();
-	FileOutputStream out = new FileOutputStream(f);
 
-	System.out.println("image"+f.getPath());
-	this.setImage(f.getPath());
-	out.close();
-	
-}
 	
 	public void addEvenement() throws IOException {
 		
-	
-		//SimpleDateFormat simpleFormat = new SimpleDateFormat("dd-MM-yyyy");
-		
+		 SimpleDateFormat formatter = new SimpleDateFormat("yyy-MM-dd");  
+	     Date date = new Date();  
+	if(	-date.getDate()+this.getDateEvenement().getDate()>=2  && this.getNombrePlace()>4)
+	{
+		this.setNbInteresses(0);
+		this.setNbParticipants(0);
+		this.setDescription("Disponible");
+		this.description="Disponible";
 		employeService.ajouterEmploye(new Evenement(dateEvenement,description,image, localisation,
 				nbInteresses,nbParticipants,nombrePlace));
-		}
+		}}
 public void recherche() {
 	
 	
@@ -136,7 +132,7 @@ public void recherche() {
 
 
 
-	public EvenementBean(Date dateEvenement, String description, String image, String localisation, int nbInteresses,
+	public EvenementBean(Date dateEvenement, String description,typeEven image, LocalisationEven localisation, int nbInteresses,
 			int nbParticipants, Integer employeIdToBeUpdated, Part img, int nombrePlace, evenementImpl employeService,
 			List<Evenement> evenements)
 	{
@@ -190,16 +186,6 @@ public void recherche() {
 	public void updateEvenement() throws IOException
 	
 	{ 
-		InputStream in =img.getInputStream();
-		File f = new File("C:\\Users\\Sarra\\Desktop\\upload"+img.getSubmittedFileName());
-		f.createNewFile();
-		FileOutputStream out = new FileOutputStream(f);
-		
-		
-		System.out.println("image"+f.getPath());
-		this.setImage(f.getPath());
-		out.close();
-		SimpleDateFormat simpleFormat = new SimpleDateFormat("dd-MM-yyyy");
 		
 		employeService.updateEvenement(new Evenement(employeIdToBeUpdated,dateEvenement,description,image, localisation,
 			nbInteresses,nbParticipants,nombrePlace )); }
@@ -233,30 +219,23 @@ public void recherche() {
 
 
 
-	public String getImage() {
+
+
+	public typeEven getImage() {
 		return image;
 	}
 
-
-
-	public void setImage(String image) {
+	public void setImage(typeEven image) {
 		this.image = image;
 	}
 
-
-
-
-	public String getLocalisation() {
+	public LocalisationEven getLocalisation() {
 		return localisation;
 	}
 
-
-
-	public void setLocalisation(String localisation) {
+	public void setLocalisation(LocalisationEven localisation) {
 		this.localisation = localisation;
 	}
-
-
 
 	public int getNbInteresses() {
 		return nbInteresses;

@@ -12,6 +12,10 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
+
 import Services.IServiceEvenementRemote;
 import model.Client;
 import model.Evenement;
@@ -29,9 +33,10 @@ import model.EvenementPass;
 public class evenementImpl implements IServiceEvenementRemote {
 	@PersistenceContext
 	EntityManager em;
-
+	public static final String ACCOUNT_SID = "AC762aca95100b9519d73d662b5a03f98f";
+	public static final String AUTH_TOKEN = "06d07a04d9cbc127efc3c44d27987c08";
 	
-	
+	@Override
 	public void affecterClientAEvenement(int clientId, int evenId) 
 	{
 		Client client = em.find(Client.class, clientId);
@@ -55,10 +60,7 @@ public class evenementImpl implements IServiceEvenementRemote {
 			
                    }
        
-            SimpleDateFormat formatter = new SimpleDateFormat("yyy-MM-dd");  
-            Date date = new Date();  
-            System.out.println(formatter.format(date));  
-            System.out.println(even.getDateEvenement().toString());
+       
             
 		}
 
@@ -78,33 +80,70 @@ public class evenementImpl implements IServiceEvenementRemote {
 	}
 	
 	
-	@Override
-	public int ajouterEvenement(Evenement employe)
-	{
-		em.persist(employe);
-		return employe.getIdEvenement();
-	}
-	
+
 	public int ajouterEvenementPasse(EvenementPass employe)
 	{
 		em.persist(employe);
 		return employe.getIdEvenementPasse();
 	}
 	
-	
-	public int ajouterEmploye(Evenement employe) {
+	@Override
+	public int ajouterEvenement(Evenement employe) {
+		
+	/*	Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+
+		Message message = Message
+
+					
+				.creator(new PhoneNumber("+21653026634"), new PhoneNumber("+19386669146"), "  Chère cliente, cher client on a un nouvel evenement pour vous  le  "
+						+ employe.getDateEvenement() + "  a " + employe.getLocalisation() +" c'est un evenement " + employe.getImage()+" .Pour plus d'information visiter notre site Web opérateur.com ")
+				.create();
+			System.out.println(message.getSid());*/
 		em.persist(employe);
 		return employe.getIdEvenement();
 	}
 	
 
-	
+
+	public List<Evenement> getAllEvenementss()
+	{
+		
+		
+		List<Evenement> emp = em.createQuery("Select e from Evenement e", Evenement.class).getResultList();
+	    List<Evenement> ev= new ArrayList<Evenement>();
+	    SimpleDateFormat formatter = new SimpleDateFormat("yyy-MM-dd");  
+        Date date = new Date();  
+           System.out.println(formatter.format(date));  
+     
+     
+        for (Evenement evenement : emp)
+        {
+    	
+            if (evenement.getDateEvenement().toString().equals(formatter.format(date) ))
+               {	 System.out.println("Date Egal");
+                      evenement.setDescription("Effectue");
+                      ajouterEvenementPasse(new EvenementPass(evenement.getDateEvenement(),evenement.getDescription(),evenement.getImage(), evenement.getLocalisation(),
+ 			        	evenement.getNbInteresses(),evenement.getNbParticipants(),evenement.getNombrePlace()));
+         
+ 
+               }
+    
+
+           if(-date.getDate()+evenement.getDateEvenement().getDate()==1 && (evenement.getNbParticipants()<evenement.getNombrePlace()))
+                {
+        	        evenement.setDescription("annule");
+        	
+        	    }
+           
+	    }
+
+		 return emp;
+	}
 	
 
 	@Override
 	public List<Evenement> getAllEvenements()
 	{
-		
 		
 		List<Evenement> emp = em.createQuery("Select e from Evenement e", Evenement.class).getResultList();
 	    List<Evenement> ev= new ArrayList<Evenement>();
@@ -153,24 +192,50 @@ public class evenementImpl implements IServiceEvenementRemote {
 
 
 
+	
+	
+	
 	@Override
-	public void supprimerEvenement(Evenement e) {
-		// TODO Auto-generated method stub
-		
+	public List<Evenement> searchEvenements(String criteria) {
+		return em.createQuery("Select e from Evenement e where description like '%"+criteria+"%'",Evenement.class).getResultList();
 	}
+		
 	@Override
 	public void deleteEvenementById(int evenementId)
 	{
 		Evenement evenement = em.find(Evenement.class, evenementId);
 		
-		//Desaffecter l'employe de tous les departements
-		//c'est le bout master qui permet de mettre a jour
-		//la table d'association
-		/*for(Departement dep : employe.getDepartements()){
-			dep.getEmployes().remove(employe);
-		}
-		*/
+
 		em.remove(evenement);
 	}
+	@Override
+	public void supprimerClientAEvenement(int clientId, int evenId) 
+	{
+		
+	      
+		Client client = em.find(Client.class, clientId);
+		Evenement even = em.find(Evenement.class, evenId);
+		List <Client> lclient=even.getClients();
+		List <Evenement> levenement=client.getEvenements();
+		even.setNbParticipants(even.getNbParticipants()-1);
+		even.setNombrePlace(even.getNombrePlace()+1);
+		lclient.remove(client);
+		levenement.remove(even);
+		
 
+
+	
+		even.setClients(lclient);
+		client.setEvenements(levenement);
+		
+		if(even.getClients().isEmpty())
+		{
+			even.getClients().add(client);
+			
+		}else if( !even.getClients().contains(client) ){
+			
+			even.getClients().add(client);
+		}
+
+	}
 }

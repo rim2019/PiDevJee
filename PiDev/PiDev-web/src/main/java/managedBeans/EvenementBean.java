@@ -21,6 +21,8 @@ import javax.faces.bean.SessionScoped;
 
 import javax.servlet.http.Part;
 
+
+
 import implementation.ClientImpl;
 import implementation.evenementImpl;
 import model.Evenement;
@@ -46,15 +48,15 @@ public class EvenementBean{
 
 	private LocalisationEven localisation;
 
-	private int nbInteresses;
+	private int nbInteresses=0;
 
 	private int nbParticipants;
-	private int clientId;
+	
 	private Integer employeIdToBeUpdated;
-
+	private String criteria;
 	private int nombrePlace;
 	@EJB
-	evenementImpl employeService;
+	evenementImpl evenementService;
 	@EJB
 	ClientImpl clientService;
 	
@@ -75,7 +77,7 @@ public class EvenementBean{
 	              	this.setDescription("Disponible");
 	             	this.description="Disponible";
 	             	
-		         employeService.ajouterEmploye(new Evenement(dateEvenement,description,image, localisation,
+	             	evenementService.ajouterEvenement(new Evenement(dateEvenement,description,image, localisation,
 				                                             nbInteresses,nbParticipants,nombrePlace));
 		         }
    }
@@ -89,24 +91,39 @@ public class EvenementBean{
               if(	-date.getDate()+this.getDateEvenement().getDate()>=2  && this.getNombrePlace()>4)
                  {
 		
-		            employeService.updateEvenement(new Evenement(employeIdToBeUpdated,dateEvenement,description,image, localisation,
+            	  evenementService.updateEvenement(new Evenement(employeIdToBeUpdated,dateEvenement,description,image, localisation,
 			                                                     nbInteresses,nbParticipants,nombrePlace ));
 		           } 
     }
 	
-public void recherche() {
-	
-	
-}
+
 	public void participerEvenement(){
 		
-		
+		if( this.getNbInteresses()==0)
+		{
 		//SimpleDateFormat simpleFormat = new SimpleDateFormat("dd-MM-yyyy");
-		this.setNbParticipants(this.getNbParticipants()+1);
-		employeService.updateEvenement(new Evenement(dateEvenement,description,image, localisation,
+		       this.setNbParticipants(this.getNbParticipants()+1);
+		       evenementService.updateEvenement(new Evenement(dateEvenement,description,image, localisation,
 				nbInteresses,nbParticipants,nombrePlace));
+		        this.setNbInteresses(1);
+		
 		}
+		
+		
+}
 	
+	public void annulerparticiperEvenement(int evenementId){
+		
+		
+		if( this.getNbInteresses()==1)
+		{
+	       int Clientid=1;
+	       evenementService.supprimerClientAEvenement(Clientid, evenementId);
+	       this.setNbInteresses(1);
+		
+		}
+		
+		}
 	
 	private List<Evenement> evenements;
 
@@ -114,23 +131,33 @@ public void recherche() {
 	{
 		
 	
-	       evenements = employeService.getAllEvenements();
+	       evenements = evenementService.getAllEvenementss();
 	 
 	        return evenements;
 	}
 	
-	
+	//Affecter
 	public void affecter(int evenementId)
 	{
-		
+		if( this.getNbInteresses()==0)
+		{
 	       int Clientid=1;
-	       employeService.affecterClientAEvenement(Clientid,evenementId);
+	       evenementService.affecterClientAEvenement(Clientid,evenementId);
+	       this.setNbInteresses(1);
+		}
+		else if( this.getNbInteresses()==1)
+		{ 
+			 int Clientid=1;
+			 evenementService.supprimerClientAEvenement(Clientid, evenementId);
+		
+	       this.setNbInteresses(0);
+		}
 	}
 	
-	
+	//Supprimer
 	public void removeEvenement(int evenementId)
 	{
-	     employeService.deleteEvenementById(evenementId);
+		evenementService.deleteEvenementById(evenementId);
 	}
 	
 	
@@ -152,7 +179,7 @@ public void recherche() {
 			int nbParticipants, Integer employeIdToBeUpdated, int nombrePlace, evenementImpl employeService,
 			List<Evenement> evenements)
 	{
-		super();
+		
 		this.dateEvenement = dateEvenement;
 		this.description = description;
 		this.image = image;
@@ -162,7 +189,7 @@ public void recherche() {
 		this.employeIdToBeUpdated = employeIdToBeUpdated;
 	
 		this.nombrePlace = nombrePlace;
-		this.employeService = employeService;
+		this.evenementService = employeService;
 		this.evenements = evenements;
 	}
 
@@ -180,6 +207,17 @@ public void recherche() {
          System.out.println("test");
 
 	}
+	
+	
+	
+	//Rechercher
+	public void filterEvenements()
+	{
+		this.evenements = evenementService.searchEvenements(criteria);
+		System.out.println(criteria);
+	}
+	
+	//Modifier
 	public void modifierEvenement(Evenement empl) throws IOException
 	{
 		
@@ -199,6 +237,11 @@ public void recherche() {
 	
 	
 	
+
+	public void setEvenements(List<Evenement> evenements) {
+		this.evenements = evenements;
+	}
+
 
 	public Date getDateEvenement() {
 		return dateEvenement;
@@ -277,7 +320,18 @@ public void recherche() {
 	public void setNbParticipants(int nbParticipants) {
 		this.nbParticipants = nbParticipants;
 	}
-     @PostConstruct
+	
+     public String getCriteria() {
+		return criteria;
+	}
+
+
+	public void setCriteria(String criteria) {
+		this.criteria = criteria;
+	}
+
+
+	@PostConstruct
 	public void init() {
 		
 		dateEvenement = new Date();

@@ -20,7 +20,11 @@ public interface IServiceEvenementRemote {
 	public void updateEvenement(Evenement e);
 	public List<Evenement> getAllEvenements();
 	public void deleteEvenementById(int employeId);
-	public void supprimerEvenement(Evenement e);
-//	public void affecterEmployeADepartement(int employeId, int depId);
+
+	public List<Evenement> searchEvenements(String criteria) ;
+	public void affecterClientAEvenement(int clientId, int evenId) ;
+
+	public void supprimerClientAEvenement(int clientId, int evenId) ;
+
 
 }

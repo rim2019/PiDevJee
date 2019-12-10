@@ -74,7 +74,11 @@
             <scope>provided</scope>
         </dependency>
 
-
+         <dependency>
+  <groupId>com.twilio.sdk</groupId>
+  <artifactId>twilio</artifactId>
+  <version>7.42.0</version>
+</dependency>
         <!-- Test scope dependencies -->
         <dependency>
             <groupId>junit</groupId>
@@ -149,6 +153,7 @@
                     <artifactId>wildfly-arquillian-container-managed</artifactId>
                     <scope>test</scope>
                 </dependency>
+       
             </dependencies>
         </profile>
 
@@ -163,6 +168,8 @@
                     <artifactId>wildfly-arquillian-container-remote</artifactId>
                     <scope>test</scope>
                 </dependency>
+                
+                
             </dependencies>
         </profile>
 

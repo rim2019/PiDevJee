@@ -1,0 +1,141 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	template="/template/template.xhtml">
+
+	<ui:param name="page_name" value="Add client" />
+	<ui:define name="content">
+		<h:panelGroup>
+		<h:form>
+				<div class="container-fluid" style="width: 50%; padding: 0;">
+					<div class="form-row">
+						<div class="form-group col-md-9">
+							<h:inputText value="#{evenementBean.criteria}"
+								placeholder="Search for something..." class="form-control"></h:inputText>
+						</div>
+						<div class="form-group col-md-3">
+							<h:commandLink class="btn btn-primary btn-sm" action="#{evenementBean.filterEvenements()}">
+								<i class="fa fa-search"></i>
+							</h:commandLink>
+						</div>
+					</div>
+				</div>
+			</h:form>
+			<h:panelGrid>
+
+<h:form enctype="multipart/form-data">
+	     
+		
+				<table>
+				
+				
+						<h:outputText value="Date de l'Evenement"></h:outputText>
+							<h:inputText value="#{evenementBean.dateEvenement}" required="true" requiredMessage="field name required">
+						<f:convertDateTime pattern="dd-MM-yyy"/>
+						</h:inputText>
+				
+					
+			
+				
+			
+				
+					
+				 
+				
+						
+
+						<h:outputText value="Type"></h:outputText>
+							<h:selectOneMenu value="#{evenementBean.image}">
+							<f:selectItem itemLabel="Choisir type Evenement" itemValue="#{data.roles[0]}" />
+							<f:selectItems value="#{data.roles}" />
+						</h:selectOneMenu>
+					
+						
+
+						<h:outputText value="Localisation"></h:outputText>
+						 	<h:selectOneMenu value="#{evenementBean.localisation}">
+							<f:selectItem itemLabel="---Choisir la Localisation---" itemValue="" />
+							<f:selectItems value="#{data.localisation}" />
+						</h:selectOneMenu>
+				
+				
+						<h:outputText value="Nombres places"></h:outputText>
+						<h:inputText value="#{evenementBean.nombrePlace}"></h:inputText>
+				
+				
+					
+			  <hr></hr>   <h:commandButton id="btn" class="btn btn-primary btn-sm" value="Ajouter evenement" action="#{evenementBean.addEvenement()}"/>
+			   <hr></hr>   <h:commandButton  class="btn btn-primary btn-sm" value="Modifier Evenement" action="#{evenementBean.updateEvenement()}"/>
+					
+
+
+				</table>
+			
+            
+           
+			</h:form>
+		</h:panelGrid>
+			<h3>List des evenements</h3>
+			<h:form id="form">
+			<Table id="datatable" class="table table-bordered">
+
+					<thead>
+						<tr>
+							<th>id Evenement</th>
+							<th>Date Evenement</th>
+							<th>Description</th>
+							<th>Categorie Evenement</th>
+							<th>Localisation</th>
+							<th>nb Participants</th>
+							<th>nombre Place</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+
+						<c:forEach items="#{evenementBean.evenements}" var="evenement">
+
+							<tr>
+								<td><h:outputText value="#{evenement.idEvenement}" /></td>
+								<td><h:outputText value="#{evenement.dateEvenement}" /></td>
+								<td><h:outputText value="#{evenement.description}" /></td>
+								<td><h:outputText value="#{evenement.image}" /></td>
+								<td><h:outputText value="#{evenement.localisation}" /></td>
+								<td><h:outputText value="#{evenement.nbParticipants}" /></td>
+								<td><h:outputText value="#{evenement.nombrePlace}" /></td>
+								
+								<td><h:commandButton class="btn btn-primary btn-sm"
+										action="#{evenementBean.removeEvenement(evenement.idEvenement)}"
+										value="Supprimer" /></td>
+								<td><h:commandButton class="btn btn-primary btn-sm"
+										action="#{evenementBean.displayEvenement(evenement)}"
+										value="Modifier" /></td>
+										
+										
+
+							</tr>
+
+
+						</c:forEach>
+						
+						
+					</tbody>
+				</Table>
+
+
+</h:form>
+
+		</h:panelGroup>
+
+
+
+
+
+
+</ui:define>
+</ui:composition>
+
